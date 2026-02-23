@@ -28,10 +28,21 @@
       background:var(--bg);
       color:var(--text);
     }
+    *{
+      font-family: 'Nunito', sans-serif !important;
+    }
     .wrap{
       max-width:1200px;
       margin:0 auto;
       padding:18px 18px 28px;
+    }
+
+    select, option {
+      font-family: 'Nunito', sans-serif !important;
+    }
+
+    input::placeholder{
+      font-family: 'Nunito', sans-serif;
     }
 
     /* Topo */
@@ -779,6 +790,32 @@
 }
 .budgetHint{ display:none; }
 
+/* Preço sempre cabendo na caixa (layout em partes) */
+.budgetValue{
+  display:flex;
+  align-items:baseline;
+  gap:0;               /* remove espaço entre partes */
+  white-space:nowrap;  /* nunca quebra linha */
+  max-width:100%;
+}
+
+.budgetValue .cur{
+  font-size:.55em;     /* "R$" menor */
+  margin-right:2px;    /* sem “espaço grande” */
+  font-weight:900;
+}
+
+.budgetValue .num{
+  font-size:1em;       /* número principal */
+  font-weight:900;
+}
+
+.budgetValue .dec{
+  font-size:.55em;     /* ",00" menor */
+  margin-left:2px;
+  font-weight:900;
+}
+
 .addBtn{
   width: 100%;
   height: 84px;
@@ -875,6 +912,40 @@
 button, input, select, textarea, option{
   font-family: var(--font) !important;
 }
+
+
+/* destaque azul temporário nos campos obrigatórios */
+.needAttention{
+  border-radius: 999px; /* mantém arredondado igual seus inputs */
+  border-color: rgba(0, 98, 255, 0.65) !important;
+
+  box-shadow:
+    0 0 0 3px rgba(59,130,246,.45),
+    0 0 0 8px rgba(59,130,246,.18);
+
+  transition: box-shadow .2s ease;
+}
+
+@keyframes pulseAttention{
+  0%{
+    box-shadow:
+      0 0 0 3px rgba(59,130,246,.35),
+      0 0 0 8px rgba(59,130,246,.15);
+  }
+  50%{
+    box-shadow:
+      0 0 0 4px rgba(59,130,246,.55),
+      0 0 0 12px rgba(59,130,246,.25);
+  }
+  100%{
+    box-shadow:
+      0 0 0 3px rgba(59,130,246,.35),
+      0 0 0 8px rgba(59,130,246,.15);
+  }
+}
+.needAttention{
+  animation: pulseAttention .9s ease-in-out 2;
+}
   </style>
 </head>
 <body>
@@ -934,7 +1005,11 @@ button, input, select, textarea, option{
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 10.8 19.86 19.86 0 0 1 .08 2.18 2 2 0 0 1 2.06 0h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L6.09 7.91a16 16 0 0 0 6 6l1.58-1.06a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z"/>
         </svg>
-        <input id="pWhatsapp" placeholder="Seu número/WhatsApp..." />
+        <input id="pWhatsapp"
+       inputmode="numeric"
+       autocomplete="tel"
+       placeholder="Seu número/WhatsApp..."
+       maxlength="15" />
       </div>
 
       <div class="pfield">
@@ -943,7 +1018,13 @@ button, input, select, textarea, option{
           <circle cx="12" cy="12" r="4"></circle>
           <circle cx="18" cy="6" r="1"></circle>
         </svg>
-        <input id="pInstagram" placeholder="Seu Instagram ID, ex: @etiquetaseadesivos_01" />
+        <input id="pInstagram"
+       inputmode="text"
+       autocomplete="off"
+       autocapitalize="none"
+       spellcheck="false"
+       placeholder="Seu Instagram ID, ex: @seuinstagramid_01"
+       maxlength="30" />
       </div>
     </div>
 
@@ -1083,9 +1164,80 @@ button, input, select, textarea, option{
       return v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
     }
 
+    function pricePartsBR(value){
+  const v = Number(value) || 0;
+  const intPart = Math.floor(v);
+  const decPart = Math.round((v - intPart) * 100).toString().padStart(2, "0");
+
+  // milhares pt-BR
+  const intBR = intPart.toLocaleString("pt-BR");
+  return { intBR, dec: "," + decPart };
+}
+
+function setBudgetValue(el, value){
+  const { intBR, dec } = pricePartsBR(value);
+  el.innerHTML = `<span class="cur">R$</span><span class="num">${intBR}</span><span class="dec">${dec}</span>`;
+
+  // Auto-fit: diminui a fonte se não couber
+  const max = 26;   // tamanho “normal”
+  const min = 14;   // mínimo pra não ficar ilegível
+  let size = max;
+
+  el.style.fontSize = max + "px";
+  // garante que está medindo depois de atualizar o HTML
+  const maxWidth = el.parentElement.clientWidth;
+
+  while(size > min && el.scrollWidth > maxWidth){
+    size -= 1;
+    el.style.fontSize = size + "px";
+  }
+}
+
+    function onlyDigits(s){
+  return (s || "").replace(/\D/g, "");
+}
+
+function formatBRPhone(digits){
+  // 10 ou 11 dígitos (com DDD)
+  const d = onlyDigits(digits).slice(0, 11);
+  if(d.length === 0) return "";
+
+  const ddd = d.slice(0, 2);
+  const rest = d.slice(2);
+
+  if(rest.length <= 4) return `(${ddd}) ${rest}`;
+
+  // 10 dígitos: (DD) 9999-9999
+  if(d.length === 10){
+    const p1 = rest.slice(0, 4);
+    const p2 = rest.slice(4, 8);
+    return `(${ddd}) ${p1}-${p2}`;
+  }
+
+  // 11 dígitos: (DD) 99999-9999
+  const p1 = rest.slice(0, 5);
+  const p2 = rest.slice(5, 9);
+  return `(${ddd}) ${p1}-${p2}`;
+}
+
+function normalizeInstagramId(value){
+  let v = (value || "").trim().toLowerCase();
+
+  // se a pessoa digitar @, remove
+  v = v.replace(/^@+/, "");
+
+  // remove espaços, acentos, e bloqueia caracteres fora do padrão do insta
+  v = v.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  v = v.replace(/[^a-z0-9._]/g, "");
+  v = v.slice(0, 30);
+
+  return v;
+}
+
     function cartCount(){
-      return Object.values(state.cart).reduce((acc, i) => acc + i.qty, 0);
-    }
+  // quantidade de itens (linhas) no carrinho
+  return Object.keys(state.cart).length;
+}
 
     function setCartCount(){
       el("cartCount").textContent = cartCount();
@@ -1242,6 +1394,57 @@ button, input, select, textarea, option{
       bannerTimer = setInterval(nextBanner, 5000);
     }
 
+
+    function requirePersonalizationFields(){
+  const w = el("pWhatsapp");
+  const i = el("pInstagram");
+
+  const whatsappOk = (w.value || "").trim().length >= 14; // (16) 99999-9999 -> 15 chars
+  const instaOk = (i.value || "").trim().length > 0;
+
+  if(whatsappOk && instaOk) return true;
+
+  // scroll até os campos (topo)
+  w.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  // destaca os que estão faltando
+  if(!whatsappOk) w.classList.add("needAttention");
+  if(!instaOk) i.classList.add("needAttention");
+
+  // remove destaque depois de um tempo
+  setTimeout(() => {
+    w.classList.remove("needAttention");
+    i.classList.remove("needAttention");
+  }, 1800);
+
+  return false;
+}
+
+function applyAutoYesToStartedCards(){
+  if(!canAutoSelectYes()) return;
+
+  document.querySelectorAll(".card[data-started='1']").forEach(card => {
+    // respeita se já marcou NÃO
+    const noRadio = card.querySelector(`input[type="radio"][value="Não"]`);
+    if(noRadio && noRadio.checked) return;
+
+    const yesRadio = card.querySelector(`input[type="radio"][value="Sim"]`);
+    if(yesRadio && !yesRadio.checked){
+      yesRadio.checked = true;
+    }
+  });
+}
+
+function canAutoSelectYes(){
+  const w = (el("pWhatsapp").value || "").trim();
+  const i = (el("pInstagram").value || "").trim();
+
+  const whatsappOk = w.length >= 14; // (16) 99999-9999
+  const instaOk = i.length > 0;
+
+  return whatsappOk && instaOk;
+}
+
     // =========================
     // 14) Grid
     // =========================
@@ -1365,20 +1568,59 @@ button, input, select, textarea, option{
 
           if(!s || !q){
             budgetLabel.textContent = "A partir de:";
-            budgetValue.textContent = moneyBR(getMergedRule(p).baseUnit);
+            setBudgetValue(budgetValue, getMergedRule(p).baseUnit);
             budgetHint.textContent = "";
             return;
           }
 
           const total = getTotalPrice(p, s, q);
           budgetLabel.textContent = "Orçamento:";
-          budgetValue.textContent = moneyBR(total);
+          setBudgetValue(budgetValue, total);
           budgetHint.textContent = ""; // reservado se você quiser mostrar unitário depois
         }
 
-        sizeSel.onchange = updateBudget;
-        qtySel.onchange = updateBudget;
-        card.querySelectorAll(`input[name="pers_${p.id}"]`).forEach(r => r.addEventListener("change", updateBudget));
+        function autoSelectYesIfAllowed(){
+  // se ele já escolheu "Não", respeita
+  const noRadio = card.querySelector(`input[name="pers_${p.id}"][value="Não"]`);
+  if(noRadio && noRadio.checked) return;
+
+  // só marca sim se os campos do topo estiverem OK
+  if(!canAutoSelectYes()) return;
+
+  const yesRadio = card.querySelector(`input[name="pers_${p.id}"][value="Sim"]`);
+  if(yesRadio && !yesRadio.checked){
+    yesRadio.checked = true;
+  }
+}
+
+sizeSel.onchange = () => {
+  if(sizeSel.value){
+    card.dataset.started = "1";
+    autoSelectYesIfAllowed(); // <-- marca SIM se topo ok
+  }
+  updateBudget(); // <-- recalcula e atualiza botão pulse
+};
+
+qtySel.onchange = () => {
+  if(qtySel.value){
+    card.dataset.started = "1";
+    autoSelectYesIfAllowed(); // <-- marca SIM se topo ok
+  }
+  updateBudget(); // <-- recalcula e atualiza botão pulse
+};
+        card.querySelectorAll(`input[name="pers_${p.id}"]`).forEach(r => {
+  r.addEventListener("change", (ev) => {
+    if(ev.target.value === "Sim"){
+      card.dataset.started = "1"; // <-- adiciona isso aqui
+
+      if(!requirePersonalizationFields()){
+        ev.target.checked = false;
+        return;
+      }
+    }
+    updateBudget();
+  });
+});
 
         addBtn.onclick = () => {
           const s = sizeSel.value;
@@ -1537,14 +1779,21 @@ button, input, select, textarea, option{
 
     el("checkout").onclick = openWhatsApp;
 
-    el("pWhatsapp").addEventListener("input", (e) => {
-      state.pWhatsapp = e.target.value;
-      syncPersonalizationToCards();
-    });
-    el("pInstagram").addEventListener("input", (e) => {
-      state.pInstagram = e.target.value;
-      syncPersonalizationToCards();
-    });
+el("pWhatsapp").addEventListener("input", (e) => {
+  const formatted = formatBRPhone(e.target.value);
+  e.target.value = formatted;
+  state.pWhatsapp = formatted;
+  syncPersonalizationToCards();
+  applyAutoYesToStartedCards();
+});
+
+el("pInstagram").addEventListener("input", (e) => {
+  const id = normalizeInstagramId(e.target.value);
+  e.target.value = id;
+  state.pInstagram = id;
+  syncPersonalizationToCards();
+  applyAutoYesToStartedCards();
+});
   </script>
 </body>
 </html>
