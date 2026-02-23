@@ -1,0 +1,1550 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo de Rótulos</title>
+  <style>
+    :root{
+      --bg:#f4f6f9;
+      --card:#ffffff;
+      --line:#d9dde6;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --brand:#29c2c7;
+      --brand2:#4f46e5;
+      --shadow: 0 10px 30px rgba(17,24,39,.08);
+      --radius:22px;
+      --radius2:18px;
+      --font: 'Nunito', sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: var(--font);
+      background:var(--bg);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:18px 18px 28px;
+    }
+
+    /* Topo */
+    .topbar{
+      display:grid;
+      grid-template-columns: 260px 1fr 84px;
+      gap:18px;
+      align-items:center;
+      margin-bottom:14px;
+    }
+    @media (max-width: 900px){
+      .topbar{grid-template-columns: 1fr; gap:12px;}
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    .brand img{
+      height:54px;
+      width:auto;
+      display:block;
+    }
+
+    .search{
+      position:relative;
+    }
+    .search input{
+      width:100%;
+      padding:16px 56px 16px 18px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      outline:none;
+      font-size:16px;
+      color:var(--text);
+    }
+    .search input::placeholder{color:#a1a7b3}
+    .search .icon{
+      position:absolute;
+      right:16px;
+      top:50%;
+      transform:translateY(-50%);
+      width:22px;
+      height:22px;
+      opacity:.55;
+    }
+
+    .cartCircle{
+      justify-self:end;
+      width:66px;
+      height:66px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      cursor:pointer;
+      user-select:none;
+      box-shadow:var(--shadow);
+    }
+    .cartCircle svg{width:26px;height:26px;opacity:.7}
+    .badge{
+      position:absolute;
+      right:8px;
+      top:8px;
+      width:26px;
+      height:26px;
+      border-radius:999px;
+      background:var(--brand);
+      color:#fff;
+      font-weight:900;
+      font-size:13px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:2px solid #fff;
+    }
+
+    /* Barra Formato */
+    .formatBar{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      padding:10px 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .formatLabel{
+      min-width:140px;
+      padding:12px 16px;
+      border-right:1px solid var(--line);
+      color:#6b7280;
+      letter-spacing:.6px;
+      font-weight:800;
+      text-transform:uppercase;
+      font-size:14px;
+    }
+    .formatTabs{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      padding-left:4px;
+    }
+    .tab{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      cursor:pointer;
+      color:#6b7280;
+      font-weight:900;
+      letter-spacing:.4px;
+    }
+    .tab svg{width:18px;height:18px;opacity:.75}
+    .tab.active{
+      border-color:rgba(41,194,199,.35);
+      background:rgba(41,194,199,.10);
+      color:#334155;
+    }
+
+    /* Banner */
+    .bannerWrap{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-bottom:14px;
+    }
+    .banner{
+      position:relative;
+      height:260px;
+      background:#eef2ff;
+    }
+    @media (max-width: 900px){
+      .banner{height:200px;}
+    }
+    .banner img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .bannerNav{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 10px;
+      pointer-events:none;
+    }
+    .bannerBtn{
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.7);
+      background:rgba(255,255,255,.75);
+      box-shadow:0 10px 30px rgba(17,24,39,.12);
+      cursor:pointer;
+      pointer-events:auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+    }
+    .bannerBtn svg{width:20px;height:20px;opacity:.8}
+    .dots{
+      position:absolute;
+      left:50%;
+      bottom:12px;
+      transform:translateX(-50%);
+      display:flex;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(255,255,255,.7);
+      backdrop-filter: blur(6px);
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      border:1px solid rgba(17,24,39,.25);
+      background:rgba(17,24,39,.15);
+      cursor:pointer;
+    }
+    .dot.active{
+      background:var(--brand);
+      border-color:rgba(41,194,199,.55);
+    }
+
+    /* Dados de personalização */
+    .personalBar{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      padding:10px 12px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+    .personalBar .label{
+      font-weight:900;
+      color:#111827;
+      padding:8px 10px;
+      white-space:nowrap;
+    }
+    .pfield{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+      min-width:320px;
+      flex:1;
+    }
+    @media (max-width: 900px){
+      .pfield{min-width:260px;}
+    }
+    .pfield input{
+      border:0;
+      outline:none;
+      width:100%;
+      font-size:14px;
+      color:var(--text);
+    }
+    .pfield svg{width:18px;height:18px;opacity:.65}
+
+    /* Layout geral */
+    .layout{
+      display:grid;
+      grid-template-columns: 260px 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .layout{grid-template-columns: 1fr;}
+    }
+
+    /* Coluna categorias */
+    .sideCard{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px 14px;
+    }
+    .sideTitle{
+      margin:0 0 14px 0;
+      font-weight:900;
+      letter-spacing:.8px;
+      color:#6b7280;
+      text-transform:uppercase;
+      font-size:18px;
+    }
+    .catList{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .catBtn{
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#6b7280;
+      font-weight:900;
+      letter-spacing:.4px;
+      cursor:pointer;
+      text-transform:uppercase;
+    }
+    .catBtn.active{
+      border-color:rgba(41,194,199,.55);
+      box-shadow: 0 0 0 4px rgba(41,194,199,.10);
+      color:#334155;
+    }
+
+    /* Grid cards */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:18px;
+    }
+    @media (max-width: 1100px){
+      .grid{grid-template-columns: repeat(2, minmax(0, 1fr));}
+    }
+    @media (max-width: 620px){
+      .grid{grid-template-columns: 1fr;}
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .thumb{
+      height:220px;
+      background:#eaf6fb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      position:relative;
+    }
+    .thumb img{
+      max-width:100%;
+      max-height:100%;
+      object-fit:contain;
+      display:block;
+      filter: drop-shadow(0 10px 20px rgba(17,24,39,.10));
+    }
+    .thumbMeta{
+      position:absolute;
+      left:12px;
+      right:12px;
+      bottom:10px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      pointer-events:none;
+    }
+    .tag{
+      background:rgba(255,255,255,.65);
+      border:1px solid rgba(255,255,255,.7);
+      color:rgba(17,24,39,.55);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      font-size:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      backdrop-filter: blur(6px);
+    }
+
+    .cardBody{
+      padding:12px 14px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .title{
+      margin:0;
+      font-size:14px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+    }
+
+    .controls{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      align-items:start;
+    }
+    .select{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:10px 10px;
+      width:100%;
+      background:#fff;
+      color:#111827;
+      font-weight:800;
+      outline:none;
+      cursor:pointer;
+    }
+
+    .budgetBox{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+      min-height:70px;
+      justify-content:center;
+    }
+    .budgetLabel{
+      color:#6b7280;
+      font-weight:900;
+      text-transform:uppercase;
+      font-size:12px;
+      letter-spacing:.4px;
+    }
+    .budgetValue{
+      font-size:20px;
+      font-weight:900;
+      color:#111827;
+      line-height:1.1;
+    }
+    .budgetHint{
+      font-size:12px;
+      color:#6b7280;
+      font-weight:800;
+    }
+
+    .personalCard{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .pTitle{
+      margin:0;
+      font-weight:900;
+      font-size:12px;
+      color:#111827;
+      text-transform:uppercase;
+      letter-spacing:.3px;
+    }
+    .pRow{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      color:#6b7280;
+      font-weight:800;
+      font-size:12px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .pRow svg{width:16px;height:16px;opacity:.7;flex:0 0 auto}
+    .pRow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+    .pChoice{
+      display:flex;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .radio{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:900;
+      color:#111827;
+      cursor:pointer;
+      user-select:none;
+    }
+    .radio input{width:18px;height:18px}
+
+    .bottomRow{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      margin-top:2px;
+    }
+    .addBtn{
+      width:54px;
+      height:54px;
+      border-radius:14px;
+      border:0;
+      background:var(--brand);
+      color:#fff;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 10px 20px rgba(41,194,199,.25);
+      flex:0 0 auto;
+    }
+    .addBtn svg{width:22px;height:22px}
+
+    /* Modal carrinho */
+    .backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(17,24,39,.45);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modal{
+      width:min(860px, 100%);
+      background:#fff;
+      border-radius:22px;
+      border:1px solid var(--line);
+      box-shadow:0 18px 60px rgba(17,24,39,.25);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:14px 16px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .modalHead h3{margin:0;font-size:16px}
+    .close{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modalBody{
+      padding:12px 16px 16px;
+      max-height:60vh;
+      overflow:auto;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 160px 120px;
+      gap:10px;
+      align-items:center;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:10px 12px;
+    }
+    @media (max-width: 720px){
+      .row{grid-template-columns:1fr;}
+    }
+    .row small{color:#6b7280;font-weight:800}
+    .row strong{font-weight:900}
+    .danger{
+      border:1px solid rgba(239,68,68,.35);
+      background:rgba(239,68,68,.08);
+      color:#991b1b;
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:900;
+      justify-self:end;
+    }
+    @media (max-width: 720px){
+      .danger{justify-self:start;}
+    }
+    .lineTotal{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      font-weight:900;
+    }
+    .modalFoot{
+      border-top:1px solid var(--line);
+      padding:12px 16px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .note{
+      color:var(--muted);
+      font-size:12px;
+      max-width:520px;
+    }
+    .wa{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .wa input{
+      width:220px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      outline:none;
+    }
+    .wa .checkout{
+      border:0;
+      background:var(--brand);
+      color:#fff;
+      font-weight:900;
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      min-width:220px;
+    }
+    .empty{
+      padding:14px;
+      border-radius:16px;
+      background:rgba(107,114,128,.06);
+      border:1px dashed rgba(107,114,128,.35);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .muted{color:var(--muted)}
+
+
+
+
+
+
+/* ===== CARD (layout final) ===== */
+
+/* Card base */
+.card{
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+/* Imagem (topo) */
+.thumb{
+  height: clamp(260px, 26vw, 360px);
+  padding: 0;
+  position: relative;
+  background: #dff1f7;
+}
+.thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 18px;
+  filter: drop-shadow(0 12px 20px rgba(17,24,39,.12));
+}
+
+/* Título dentro da imagem */
+.thumbTitle{
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  right: 14px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  font-size: 14px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid rgba(255,255,255,.85);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 10px 12px;
+}
+
+/* Categoria e formato na base da imagem, com opacidade */
+.thumbMeta{
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+.tag{
+  background: transparent;
+  border: 0;
+  padding: 0;
+  backdrop-filter: none;
+  border-radius: 0;
+  font-size: 10px;
+  opacity: .38;
+  color: #111827;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* Corpo */
+.cardBody{
+  padding: 12px 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cardBody .title{ display:none; }
+
+/* Linha principal: esquerda (selects) + direita (orçamento + botão) */
+.protoRow{
+  display: grid;
+  grid-template-columns: 1fr clamp(132px, 22%, 150px);
+  gap: 12px;
+  align-items: start;
+}
+
+.controls{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.select{
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 8px 4px;
+  width: 100%;
+  background: #fff;
+  color: #111827;
+  font-weight: 900;
+  outline: none;
+  cursor: pointer;
+  height: 52px;
+}
+
+/* Painel direito */
+.protoRight{
+  background: rgba(41,194,199,.25);
+  border: 1px solid rgba(41,194,199,.35);
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* sem vão */
+  gap: 10px;
+}
+
+.budgetBox{
+  border: 0;
+  padding: 0;
+  background: transparent;
+  min-height: auto;
+}
+.budgetLabel{
+  color:#0f172a;
+  opacity:.8;
+  font-weight: 900;
+  text-transform:none;
+  font-size: 12px;
+  letter-spacing: .2px;
+}
+.budgetValue{
+  font-size: 26px;
+  font-weight: 900;
+  color: #111827;
+  line-height: 1.05;
+}
+.budgetHint{ display:none; }
+
+.addBtn{
+  width: 100%;
+  height: 84px;
+  border-radius: 16px;
+  border: 0;
+  background: var(--brand);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 14px 26px rgba(41,194,199,.28);
+}
+.addBtn svg{ width: 34px; height: 34px; }
+
+/* Faixa de personalização (full width, embaixo) */
+.personalCard{
+  background: rgba(107,114,128,.12);
+  border: 1px solid rgba(107,114,128,.25);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pTitle{
+  margin: 0;
+  font-weight: 900;
+  font-size: 14px;
+  color: #111827;
+  text-transform: none;
+  letter-spacing: .2px;
+}
+.pRow{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  color:#6b7280;
+  font-weight:800;
+  font-size:13px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.pRow svg{width:18px;height:18px;opacity:.7;flex:0 0 auto}
+.pRow span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Sim / Não embaixo, menor */
+.pChoice{
+  display:flex;
+  justify-content:center;
+  gap: 34px;
+  align-items:center;
+  padding-top: 6px;
+}
+.radio{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  font-weight: 900;
+  color:#111827;
+  cursor:pointer;
+  user-select:none;
+}
+.radio input{ width: 22px; height: 22px; }
+.radio span{ font-size: 18px; font-weight: 900; }
+
+/* Pulsar botão quando pronto */
+@keyframes pulseBtn{
+  0%   { transform: scale(1); box-shadow: 0 14px 26px rgba(41,194,199,.20); }
+  50%  { transform: scale(1.05); box-shadow: 0 18px 34px rgba(41,194,199,.34); }
+  100% { transform: scale(1); box-shadow: 0 14px 26px rgba(41,194,199,.20); }
+}
+.addBtn.pulse{
+  animation: pulseBtn 1.15s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce){
+  .addBtn.pulse{ animation: none; }
+}
+
+/* Responsivo */
+@media (max-width: 620px){
+  .protoRow{ grid-template-columns: 1fr 150px; }
+  .addBtn{ height: 78px; }
+  .thumb{ height: 320px; }
+}
+
+
+.addBtn{
+    height: 72px;
+  }
+}
+
+button, input, select, textarea, option{
+  font-family: var(--font) !important;
+}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <img id="logoImg" alt="Etiquetas & Adesivos" src="" />
+      </div>
+
+      <div class="search">
+        <input id="search" type="search" placeholder="Pesquisar nome, categoria, formato ..." />
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="M21 21l-4.3-4.3"></path>
+        </svg>
+      </div>
+
+      <div class="cartCircle" id="cartBtn" aria-label="Carrinho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-2 9H8L6 6Z"></path>
+          <path d="M6 6L5 3H2"></path>
+          <circle cx="9" cy="20" r="1"></circle>
+          <circle cx="18" cy="20" r="1"></circle>
+        </svg>
+        <div class="badge" id="cartCount">0</div>
+      </div>
+    </div>
+
+    <div class="formatBar">
+      <div class="formatLabel">FORMATO</div>
+      <div class="formatTabs" id="formatTabs"></div>
+    </div>
+
+    <div class="bannerWrap">
+      <div class="banner" id="banner">
+        <a id="bannerLink" href="#" style="display:block;width:100%;height:100%;">
+          <img id="bannerImg" alt="Banner" src="" />
+        </a>
+
+        <div class="bannerNav">
+          <button class="bannerBtn" id="bannerPrev" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="bannerBtn" id="bannerNext" aria-label="Próximo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="dots" id="bannerDots"></div>
+      </div>
+    </div>
+
+    <div class="personalBar">
+      <div class="label">Para personalização, nos informe:</div>
+
+      <div class="pfield">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 10.8 19.86 19.86 0 0 1 .08 2.18 2 2 0 0 1 2.06 0h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L6.09 7.91a16 16 0 0 0 6 6l1.58-1.06a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <input id="pWhatsapp" placeholder="Seu número/WhatsApp..." />
+      </div>
+
+      <div class="pfield">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="18" cy="6" r="1"></circle>
+        </svg>
+        <input id="pInstagram" placeholder="Seu Instagram ID, ex: @etiquetaseadesivos_01" />
+      </div>
+    </div>
+
+    <div class="layout">
+      <aside class="sideCard">
+        <h2 class="sideTitle">CATEGORIAS</h2>
+        <div class="catList" id="catList"></div>
+      </aside>
+
+      <main>
+        <section class="grid" id="grid"></section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal carrinho -->
+  <div class="backdrop" id="backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <h3>Seu carrinho</h3>
+        <button class="close" id="closeModal">Fechar</button>
+      </div>
+      <div class="modalBody" id="cartBody"></div>
+      <div class="modalFoot">
+        <div class="note">
+          O pedido será enviado no WhatsApp com os itens, tamanho, quantidade e a opção de personalização selecionada.
+          <span class="muted">Depois ajustamos a mensagem padrão.</span>
+        </div>
+        <div class="wa">
+          <input id="clientName" placeholder="Nome da cliente (opcional)" />
+          <button class="checkout" id="checkout">Finalizar no WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================
+    // 1) IMAGENS (troque aqui)
+    // =========================
+    const ASSETS = {
+      // Recomendo usar caminho relativo: "imgs/logo.png"
+      logoUrl: "https://via.placeholder.com/260x80.png?text=LOGO+E%26A",
+
+      // Imagem padrão para cards enquanto você não colocar as reais
+      placeholderLabel: "https://via.placeholder.com/600x600.png?text=IMAGEM+DO+R%C3%93TULO",
+
+      // Banner padrão (se faltar imagem)
+      placeholderBanner: "https://via.placeholder.com/1600x500.png?text=BANNER"
+    };
+
+    // =========================
+    // 2) BANNERS (carrossel)
+    //    Troque imageUrl e linkUrl quando quiser
+    // =========================
+    const BANNERS = [
+      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" },
+      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" },
+      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" }
+    ];
+
+    // =========================
+    // 3) WhatsApp destino (16) 988350242
+    // =========================
+    const WHATSAPP_NUMBER = "5516988350242";
+
+    // =========================
+    // 4) REGRAS DE PREÇO (editáveis)
+    //    Global -> Categoria -> Produto
+    // =========================
+    const PRICE_RULES = {
+      global: {
+        baseUnit: 0.50, // "A partir de" (unitário base) antes de escolher
+        sizeMultipliers: { "3x3cm": 1.00, "5x5cm": 1.25, "6x6cm": 1.40, "7x7cm": 1.60 },
+        // 1000 é o "normal", quantidades menores ficam mais caras
+        qtyMultipliers: { "100": 1.35, "500": 1.12, "1000": 1.00 }
+      },
+
+      // Exemplo: para editar por categoria, basta criar/chutar valores aqui.
+      // category: { "PÁSCOA": { baseUnit: 0.55, qtyMultipliers: { "100":1.45, "500":1.18, "1000":1.00 } } }
+      category: {},
+
+      // Exemplo: para editar um produto específico:
+      // product: { "P001": { baseUnit: 0.65 } }
+      product: {}
+    };
+
+    // =========================
+    // 5) Opções padrão
+    // =========================
+    const DEFAULT_SIZES = ["3x3cm","5x5cm","6x6cm","7x7cm"];
+    const DEFAULT_QTYS  = ["100","500","1000"];
+
+    // =========================
+    // 6) PRODUTOS (cadastro fácil)
+    //    Você pode:
+    //    - mudar baseUnit por produto
+    //    - mudar sizeOptions / qtyOptions por produto
+    //    - mudar image
+    // =========================
+    const PRODUCTS = [
+      {
+        id:"P001",
+        name:"Rótulo Páscoa Ovo",
+        format:"Especiais",
+        category:"PÁSCOA",
+        image: ASSETS.placeholderLabel,
+
+        // opcionais (se não preencher, usa a regra global/categoria)
+        // baseUnit: 0.50,
+        // sizeOptions: ["3x3cm","5x5cm"],
+        // qtyOptions: ["100","500","1000"]
+      },
+      { id:"P002", name:"Rótulo Vela Clean", format:"Quadrados", category:"VELAS", image: ASSETS.placeholderLabel },
+      { id:"P003", name:"Rótulo Cosmético Minimal", format:"Redondos", category:"COSMÉTICOS", image: ASSETS.placeholderLabel },
+      { id:"P004", name:"Rótulo Bolo Festivo", format:"Quadrados", category:"BOLOS", image: ASSETS.placeholderLabel },
+      { id:"P005", name:"Rótulo Banho Premium", format:"Redondos", category:"BANHO", image: ASSETS.placeholderLabel },
+      { id:"P006", name:"Rótulo Casa Organiza", format:"Especiais", category:"CASA", image: ASSETS.placeholderLabel }
+    ];
+
+    // =========================
+    // 7) Estado
+    // =========================
+    const state = {
+      format: "Todos",
+      category: "TODOS",
+      query: "",
+      cart: {},  // key: cartItemId
+      bannerIndex: 0,
+      pWhatsapp: "",
+      pInstagram: ""
+    };
+
+    const el = (id) => document.getElementById(id);
+
+    function moneyBR(v){
+      return v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    }
+
+    function cartCount(){
+      return Object.values(state.cart).reduce((acc, i) => acc + i.qty, 0);
+    }
+
+    function setCartCount(){
+      el("cartCount").textContent = cartCount();
+    }
+
+    // =========================
+    // 8) Regras de preço: merge
+    // =========================
+    function getMergedRule(product){
+      const g = PRICE_RULES.global || {};
+      const c = (PRICE_RULES.category && PRICE_RULES.category[product.category]) || {};
+      const p = (PRICE_RULES.product && PRICE_RULES.product[product.id]) || {};
+      const out = {
+        baseUnit: (product.baseUnit ?? p.baseUnit ?? c.baseUnit ?? g.baseUnit) ?? 0.50,
+        sizeMultipliers: { ...(g.sizeMultipliers||{}), ...(c.sizeMultipliers||{}), ...(p.sizeMultipliers||{}) },
+        qtyMultipliers:  { ...(g.qtyMultipliers||{}),  ...(c.qtyMultipliers||{}),  ...(p.qtyMultipliers||{}) }
+      };
+      return out;
+    }
+
+    function getUnitPrice(product, sizeValue, qtyValue){
+      const rule = getMergedRule(product);
+      const sizeMul = rule.sizeMultipliers?.[sizeValue] ?? 1.0;
+      const qtyMul  = rule.qtyMultipliers?.[qtyValue] ?? 1.0;
+      return rule.baseUnit * sizeMul * qtyMul;
+    }
+
+    function getTotalPrice(product, sizeValue, qtyValue){
+      const unit = getUnitPrice(product, sizeValue, qtyValue);
+      const q = parseInt(qtyValue, 10) || 0;
+      return unit * q;
+    }
+
+    // =========================
+    // 9) Filtros dinâmicos (só o que existe)
+    // =========================
+    function buildFormatosFromProducts(products){
+      const set = new Set(products.map(p => p.format).filter(Boolean));
+      const ordered = ["Redondos", "Quadrados", "Especiais"];
+      const list = ordered.filter(x => set.has(x))
+        .concat([...set].filter(x => !ordered.includes(x)).sort((a,b)=>a.localeCompare(b,"pt-BR")));
+      return [{ key:"Todos", label:"TODOS", icon:"cloud" }].concat(
+        list.map(f => ({
+          key: f,
+          label: f.toUpperCase(),
+          icon: f === "Redondos" ? "circle" : f === "Quadrados" ? "square" : "heart"
+        }))
+      );
+    }
+
+    function buildCategoriasFromProducts(products){
+      const set = new Set(products.map(p => p.category).filter(Boolean));
+      const sorted = [...set].sort((a,b)=>a.localeCompare(b, "pt-BR"));
+      return ["TODOS", ...sorted];
+    }
+
+    const FORMATOS_DIN = buildFormatosFromProducts(PRODUCTS);
+    const CATEGORIAS_DIN = buildCategoriasFromProducts(PRODUCTS);
+
+    function matches(p){
+      const q = state.query.trim().toLowerCase();
+      const matchFormat = state.format === "Todos" || p.format === state.format;
+      const matchCat = state.category === "TODOS" || p.category === state.category;
+      if(!matchFormat || !matchCat) return false;
+      if(!q) return true;
+      const hay = `${p.id} ${p.name} ${p.format} ${p.category}`.toLowerCase();
+      return hay.includes(q);
+    }
+
+    // =========================
+    // 10) Ícones simples
+    // =========================
+    function iconSvg(type){
+      if(type === "circle"){
+        return `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg>`;
+      }
+      if(type === "square"){
+        return `<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`;
+      }
+      if(type === "heart"){
+        return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.6-9.5-8.6C.6 9.2 2.3 6 5.8 6c1.8 0 3.2 1 4.2 2.3C11 7 12.4 6 14.2 6c3.5 0 5.2 3.2 3.3 6.4C19 16.4 12 21 12 21z"/></svg>`;
+      }
+      return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 15h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6 1.6A3.5 3.5 0 0 0 7 15z"/></svg>`;
+    }
+
+    // =========================
+    // 11) Render: Formatos
+    // =========================
+    function renderFormatTabs(){
+      const wrap = el("formatTabs");
+      wrap.innerHTML = "";
+      FORMATOS_DIN.forEach(f => {
+        const b = document.createElement("div");
+        b.className = "tab" + (state.format === f.key ? " active" : "");
+        b.innerHTML = `${iconSvg(f.icon)} <span>${f.label}</span>`;
+        b.onclick = () => {
+          state.format = f.key;
+          renderFormatTabs();
+          renderGrid();
+        };
+        wrap.appendChild(b);
+      });
+    }
+
+    // =========================
+    // 12) Render: Categorias
+    // =========================
+    function renderCategorias(){
+      const list = el("catList");
+      list.innerHTML = "";
+      CATEGORIAS_DIN.forEach(c => {
+        const btn = document.createElement("button");
+        btn.className = "catBtn" + (state.category === c ? " active" : "");
+        btn.textContent = c;
+        btn.onclick = () => {
+          state.category = c;
+          renderCategorias();
+          renderGrid();
+        };
+        list.appendChild(btn);
+      });
+    }
+
+    // =========================
+    // 13) Banner (carrossel)
+    // =========================
+    function renderBannerDots(){
+      const dots = el("bannerDots");
+      dots.innerHTML = "";
+      BANNERS.forEach((_, idx) => {
+        const d = document.createElement("div");
+        d.className = "dot" + (idx === state.bannerIndex ? " active" : "");
+        d.onclick = () => setBanner(idx);
+        dots.appendChild(d);
+      });
+    }
+
+    function setBanner(idx){
+      if(!BANNERS.length) return;
+      state.bannerIndex = (idx + BANNERS.length) % BANNERS.length;
+      const b = BANNERS[state.bannerIndex];
+      el("bannerImg").src = b.imageUrl || ASSETS.placeholderBanner;
+      el("bannerLink").href = b.linkUrl || "#";
+      renderBannerDots();
+    }
+
+    function nextBanner(){ setBanner(state.bannerIndex + 1); }
+    function prevBanner(){ setBanner(state.bannerIndex - 1); }
+
+    let bannerTimer = null;
+    function startBannerAuto(){
+      if(bannerTimer) clearInterval(bannerTimer);
+      if(BANNERS.length <= 1) return;
+      bannerTimer = setInterval(nextBanner, 5000);
+    }
+
+    // =========================
+    // 14) Grid
+    // =========================
+    function renderGrid(){
+      const grid = el("grid");
+      const items = PRODUCTS.filter(matches);
+      grid.innerHTML = "";
+
+      if(items.length === 0){
+        const div = document.createElement("div");
+        div.className = "empty";
+        div.textContent = "Nenhum rótulo encontrado.";
+        grid.appendChild(div);
+        return;
+      }
+
+      items.forEach(p => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const sizeOptions = p.sizeOptions?.length ? p.sizeOptions : DEFAULT_SIZES;
+        const qtyOptions  = p.qtyOptions?.length ? p.qtyOptions : DEFAULT_QTYS;
+
+        const rule = getMergedRule(p);
+        const fromText = moneyBR(rule.baseUnit);
+
+        card.innerHTML = `
+  <div class="thumb">
+    <img src="${p.image || ASSETS.placeholderLabel}" alt="${p.name}">
+    <div class="thumbTitle">${p.name}</div>
+
+    <div class="thumbMeta">
+      <div class="tag">CATEGORIA: ${p.category}</div>
+      <div class="tag">FORMATO: ${p.format}</div>
+    </div>
+  </div>
+
+  <div class="cardBody">
+    <div class="protoRow">
+      <div>
+        <div class="controls">
+          <select class="select js-size" aria-label="Tamanho">
+            <option value="">Tamanho</option>
+            ${sizeOptions.map(s => `<option value="${s}">${s}</option>`).join("")}
+          </select>
+
+          <select class="select js-qty" aria-label="Quantidade">
+            <option value="">Quantidade</option>
+            ${qtyOptions.map(q => `<option value="${q}">${q} unid.</option>`).join("")}
+          </select>
+        </div>
+      </div>
+
+      <div class="protoRight">
+        <div class="budgetBox">
+          <div class="budgetLabel js-budget-label">A partir de:</div>
+          <div class="budgetValue js-budget-value">${fromText}</div>
+          <div class="budgetHint js-budget-hint"></div>
+        </div>
+
+        <button class="addBtn js-add" aria-label="Adicionar ao carrinho" title="Adicionar ao carrinho">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 6h15l-2 9H8L6 6Z"></path>
+            <path d="M6 6L5 3H2"></path>
+            <circle cx="9" cy="20" r="1"></circle>
+            <circle cx="18" cy="20" r="1"></circle>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="personalCard">
+      <p class="pTitle">Deseja personalizar com seu:</p>
+
+      <div class="pRow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.15 10.8 19.86 19.86 0 0 1 .08 2.18 2 2 0 0 1 2.06 0h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L6.09 7.91a16 16 0 0 0 6 6l1.58-1.06a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        <span class="js-pw">${state.pWhatsapp ? state.pWhatsapp : "( ) ____"}</span>
+      </div>
+
+      <div class="pRow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+          <circle cx="12" cy="12" r="4"></circle>
+          <circle cx="18" cy="6" r="1"></circle>
+        </svg>
+        <span class="js-pi">${state.pInstagram ? state.pInstagram : "@____"}</span>
+      </div>
+
+      <div class="pChoice">
+        <label class="radio">
+          <input type="radio" name="pers_${p.id}" value="Sim" />
+          <span>Sim</span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="pers_${p.id}" value="Não" />
+          <span>Não</span>
+        </label>
+      </div>
+    </div>
+  </div>
+`;
+
+        const sizeSel = card.querySelector(".js-size");
+        const qtySel  = card.querySelector(".js-qty");
+        const budgetLabel = card.querySelector(".js-budget-label");
+        const budgetValue = card.querySelector(".js-budget-value");
+        const budgetHint  = card.querySelector(".js-budget-hint");
+        const addBtn = card.querySelector(".js-add");
+
+        function updateBudget(){
+          const s = sizeSel.value;
+          const q = qtySel.value;
+
+          const persSelected = card.querySelector(`input[name="pers_${p.id}"]:checked`)?.value || "";
+
+          // pulsar quando estiver tudo preenchido
+          if(s && q && persSelected){ addBtn.classList.add("pulse"); }
+          else{ addBtn.classList.remove("pulse"); }
+
+          if(!s || !q){
+            budgetLabel.textContent = "A partir de:";
+            budgetValue.textContent = moneyBR(getMergedRule(p).baseUnit);
+            budgetHint.textContent = "";
+            return;
+          }
+
+          const total = getTotalPrice(p, s, q);
+          budgetLabel.textContent = "Orçamento:";
+          budgetValue.textContent = moneyBR(total);
+          budgetHint.textContent = ""; // reservado se você quiser mostrar unitário depois
+        }
+
+        sizeSel.onchange = updateBudget;
+        qtySel.onchange = updateBudget;
+        card.querySelectorAll(`input[name="pers_${p.id}"]`).forEach(r => r.addEventListener("change", updateBudget));
+
+        addBtn.onclick = () => {
+          const s = sizeSel.value;
+          const q = qtySel.value;
+
+          if(!s || !q){
+            alert("Selecione o tamanho e a quantidade para adicionar ao carrinho.");
+            return;
+          }
+
+          const pers = card.querySelector(`input[name="pers_${p.id}"]:checked`)?.value || "";
+          const unit = getUnitPrice(p, s, q);
+          const total = getTotalPrice(p, s, q);
+
+          const cartKey = `${p.id}__${s}__${q}__${pers || "NA"}`;
+
+          state.cart[cartKey] = {
+            key: cartKey,
+            productId: p.id,
+            name: p.name,
+            format: p.format,
+            category: p.category,
+            size: s,
+            qty: parseInt(q, 10),
+            personalize: pers, // "Sim" | "Não" | ""
+            unitPrice: unit,
+            totalPrice: total
+          };
+
+          setCartCount();
+          renderCart();
+        };
+
+        // Atualiza textos de personalização (topo) dentro do card
+        card.querySelector(".js-pw").textContent = state.pWhatsapp ? state.pWhatsapp : "---";
+        card.querySelector(".js-pi").textContent = state.pInstagram ? state.pInstagram : "---";
+
+        grid.appendChild(card);
+      });
+    }
+
+    // =========================
+    // 15) Carrinho + WhatsApp
+    // =========================
+    function renderCart(){
+      const body = el("cartBody");
+      const items = Object.values(state.cart);
+      body.innerHTML = "";
+
+      if(items.length === 0){
+        const div = document.createElement("div");
+        div.className = "empty";
+        div.textContent = "Seu carrinho está vazio.";
+        body.appendChild(div);
+        return;
+      }
+
+      items.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
+
+      items.forEach(i => {
+        const row = document.createElement("div");
+        row.className = "row";
+        row.innerHTML = `
+          <div>
+            <strong>${i.name}</strong><br>
+            <small>${i.category} • ${i.format} • ${i.size} • ${i.qty} unid.</small><br>
+            <small>Personalização: ${i.personalize ? i.personalize : "Não selecionado"}</small>
+          </div>
+          <div class="lineTotal">${moneyBR(i.totalPrice)}</div>
+          <button class="danger">Remover</button>
+        `;
+
+        row.querySelector(".danger").onclick = () => {
+          delete state.cart[i.key];
+          setCartCount();
+          renderCart();
+        };
+
+        body.appendChild(row);
+      });
+    }
+
+    function buildWhatsAppMessage(){
+      const items = Object.values(state.cart);
+      const name = el("clientName").value.trim();
+
+      const lines = [];
+      lines.push("Olá! Quero fazer um pedido pelo catálogo:");
+      if(name) lines.push(`Nome: ${name}`);
+      if(state.pWhatsapp) lines.push(`WhatsApp informado: ${state.pWhatsapp}`);
+      if(state.pInstagram) lines.push(`Instagram informado: ${state.pInstagram}`);
+      lines.push("");
+
+      items.forEach(i => {
+        const pers = i.personalize ? ` | Personalização: ${i.personalize}` : "";
+        lines.push(`• ${i.name} | ${i.category} / ${i.format} | ${i.size} | ${i.qty} unid.${pers} | Total: ${moneyBR(i.totalPrice)}`);
+      });
+
+      lines.push("");
+      lines.push("Pode me orientar sobre o próximo passo?");
+      return encodeURIComponent(lines.join("\n"));
+    }
+
+    function openWhatsApp(){
+      const items = Object.values(state.cart);
+      if(items.length === 0){
+        alert("Seu carrinho está vazio.");
+        return;
+      }
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${buildWhatsAppMessage()}`;
+      window.open(url, "_blank");
+    }
+
+    // Modal
+    function openModal(){
+      el("backdrop").style.display = "flex";
+      el("backdrop").setAttribute("aria-hidden", "false");
+      renderCart();
+    }
+    function closeModal(){
+      el("backdrop").style.display = "none";
+      el("backdrop").setAttribute("aria-hidden", "true");
+    }
+
+    // Personalização (topo)
+    function syncPersonalizationToCards(){
+      document.querySelectorAll(".js-pw").forEach(n => { n.textContent = state.pWhatsapp ? state.pWhatsapp : "( ) ____"; });
+      document.querySelectorAll(".js-pi").forEach(n => { n.textContent = state.pInstagram ? state.pInstagram : "@____"; });
+    }
+
+    // Init
+    el("logoImg").src = ASSETS.logoUrl;
+
+    renderFormatTabs();
+    renderCategorias();
+
+    setBanner(0);
+    el("bannerPrev").onclick = prevBanner;
+    el("bannerNext").onclick = nextBanner;
+    startBannerAuto();
+
+    renderGrid();
+    setCartCount();
+    renderCart();
+
+    el("search").addEventListener("input", (e) => {
+      state.query = e.target.value;
+      renderGrid();
+    });
+
+    el("cartBtn").onclick = openModal;
+    el("closeModal").onclick = closeModal;
+    el("backdrop").addEventListener("click", (e) => {
+      if(e.target === el("backdrop")) closeModal();
+    });
+
+    el("checkout").onclick = openWhatsApp;
+
+    el("pWhatsapp").addEventListener("input", (e) => {
+      state.pWhatsapp = e.target.value;
+      syncPersonalizationToCards();
+    });
+    el("pInstagram").addEventListener("input", (e) => {
+      state.pInstagram = e.target.value;
+      syncPersonalizationToCards();
+    });
+  </script>
+</body>
+</html>
