@@ -665,11 +665,11 @@
 }
 
 /* Imagem (topo) */
-.thumb{
-  height: clamp(260px, 26vw, 360px);
-  padding: 0;
-  position: relative;
-  background: #dff1f7;
+.thumb {
+    height: clamp(260px, 30vw, 360px);
+    padding: 15px;
+    position: relative;
+    background: #dff1f7;
 }
 .thumb img{
   width: 100%;
@@ -680,20 +680,20 @@
 }
 
 /* Título dentro da imagem */
-.thumbTitle{
-  position: absolute;
-  left: 14px;
-  top: 14px;
-  right: 14px;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: .4px;
-  font-size: 14px;
-  background: rgba(255,255,255,.78);
-  border: 1px solid rgba(255,255,255,.85);
-  backdrop-filter: blur(6px);
-  border-radius: 16px;
-  padding: 10px 12px;
+.thumbTitle {
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    right: 7px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: 14px;
+    background: rgb(255 255 255 / 25%);
+    border: 1px solid rgba(255, 255, 255, .85);
+    backdrop-filter: blur(3px);
+    border-radius: 12px;
+    padding: 8px 8px;
 }
 
 /* Categoria e formato na base da imagem, com opacidade */
@@ -1174,6 +1174,12 @@ button, input, select, textarea, option{
   vertical-align: middle;
 }
     
+.tab .formatIcon{
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  opacity: .85;
+}
 
   </style>
 </head>
@@ -1302,12 +1308,18 @@ button, input, select, textarea, option{
   // ícones (pode ser link do GitHub Pages também)
   iconWhatsapp: "icons/icon_whatsapp.svg",
   iconInstagram: "icons/icon_instagram.svg"
-  formatIcons: {
-  "Redondos": "imgs/icon-redondo.svg",
-  "Quadrados": "imgs/icon-quadrado.svg",
-  "Especiais": "imgs/icon-especial.svg"
-  }
 };
+
+const FORMAT_ICONS = {
+  "Redondos": "icons/cat_redondos.svg",
+  "Quadrados": "icons/cat_quadrados.svg",
+  "Especiais": "icons/cat_especiais.svg",
+  "Todos": "icons/cat_todos.svg"
+};
+
+function getFormatIcon(format){
+  return FORMAT_ICONS[format] || "";
+}
 
     // =========================
     // 2) BANNERS (carrossel)
@@ -1605,7 +1617,11 @@ setTimeout(() => {
       FORMATOS_DIN.forEach(f => {
         const b = document.createElement("div");
         b.className = "tab" + (state.format === f.key ? " active" : "");
-        b.innerHTML = `${iconSvg(f.icon)} <span>${f.label}</span>`;
+        const iconUrl = getFormatIcon(f.key);
+b.innerHTML = `
+  ${iconUrl ? `<img class="formatIcon" src="${iconUrl}" alt="">` : iconSvg(f.icon)}
+  <span>${f.label}</span>
+`;
         b.onclick = () => {
           state.format = f.key;
           renderFormatTabs();
@@ -1652,7 +1668,7 @@ setTimeout(() => {
       if(!BANNERS.length) return;
       state.bannerIndex = (idx + BANNERS.length) % BANNERS.length;
       const b = BANNERS[state.bannerIndex];
-      el("bannerImg").src = b.imageUrl || ASSETS.placeholderBanner;
+      el("bannerImg").src = b.image || ASSETS.placeholderBanner;
       el("bannerLink").href = b.linkUrl || "#";
       renderBannerDots();
     }
