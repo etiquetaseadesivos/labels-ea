@@ -1167,6 +1167,14 @@ button, input, select, textarea, option{
   100% { opacity: 0; }
 }
 
+.formatIcon{
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+    
+
   </style>
 </head>
 <body>
@@ -1287,13 +1295,18 @@ button, input, select, textarea, option{
     // 1) IMAGENS (troque aqui)
     // =========================
     const ASSETS = {
-  logoUrl: "https://via.placeholder.com/220x80.png?text=LOGO",
+  logoUrl: "icons/logoea",
   placeholderLabel: "https://via.placeholder.com/800x800.png?text=ROTULO",
   placeholderBanner: "https://via.placeholder.com/1600x520.png?text=BANNER",
 
   // ícones (pode ser link do GitHub Pages também)
-  iconWhatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
-  iconInstagram: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+  iconWhatsapp: "icons/icon_whatsapp.svg",
+  iconInstagram: "icons/icon_instagram.svg"
+  formatIcons: {
+  "Redondos": "imgs/icon-redondo.svg",
+  "Quadrados": "imgs/icon-quadrado.svg",
+  "Especiais": "imgs/icon-especial.svg"
+  }
 };
 
     // =========================
@@ -1301,9 +1314,9 @@ button, input, select, textarea, option{
     //    Troque imageUrl e linkUrl quando quiser
     // =========================
     const BANNERS = [
-      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" },
-      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" },
-      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" }
+      { image: "banners/banner1.png", linkUrl: "#" },
+      { image: "banners/banner1.png", linkUrl: "#" },
+      { image: "banners/banner1.png", linkUrl: "#" },
     ];
 
     // =========================
@@ -1354,22 +1367,22 @@ button, input, select, textarea, option{
     const PRODUCTS = [
       {
         id:"P001",
-        name:"Rótulo Páscoa Ovo",
+        name:"Rótulo Páscoa Flores",
         format:"Especiais",
         category:"PÁSCOA",
         ref: "RPSC1",
-        image: ASSETS.placeholderLabel,
+        image: "labels/RPSC1.png",
 
         // opcionais (se não preencher, usa a regra global/categoria)
         // baseUnit: 0.50,
         // sizeOptions: ["3x3cm","5x5cm"],
         // qtyOptions: ["100","500","1000"]
       },
-      { id:"P002", name:"Rótulo Vela Clean", format:"Quadrados", category:"VELAS", ref: "RPSC1", image: ASSETS.placeholderLabel },
-      { id:"P003", name:"Rótulo Cosmético Minimal", format:"Redondos", category:"COSMÉTICOS", ref: "RPSC1", image: ASSETS.placeholderLabel },
-      { id:"P004", name:"Rótulo Bolo Festivo", format:"Quadrados", category:"BOLOS", ref: "RPSC1", image: ASSETS.placeholderLabel },
-      { id:"P005", name:"Rótulo Banho Premium", format:"Redondos", category:"BANHO", ref: "RPSC1", image: ASSETS.placeholderLabel },
-      { id:"P006", name:"Rótulo Casa Organiza", format:"Especiais", category:"CASA", ref: "RPSC1", image: ASSETS.placeholderLabel }
+      { id:"P004", name:"Rótulo Páscoa Coelhinho Falante", format:"Especiais", category:"PÁSCOA", ref: "RPSC2", image: "labels/RPSC2.png" },
+      { id:"P002", name:"Rótulo Páscoa Arbusto", format:"Quadrados", category:"PÁSCOA", ref: "RPSC3", image: "labels/RPSC3.png" },
+      { id:"P004", name:"Rótulo Páscoa Xadrez", format:"Redondos", category:"PÁSCOA", ref: "RPSC4", image: "labels/RPSC4.png" },
+      { id:"P005", name:"Rótulo Páscoa Premium", format:"Redondos", category:"PÁSCOA", ref: "RPSC5", image: "labels/RPSC5.png" },
+      { id:"P006", name:"Rótulo Páscoa Turquesa", format:"Especiais", category:"PÁSCOA", ref: "RPSC6", image: "labels/RPSC6.png" }
     ];
 
     // =========================
