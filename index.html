@@ -741,7 +741,7 @@
 .controls{
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 4px;
 }
 .select{
   border: 1px solid var(--line);
@@ -765,7 +765,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* sem vão */
-  gap: 10px;
+  gap: 18px;
 }
 
 .budgetBox{
@@ -907,7 +907,7 @@
 .addBtn{
     height: 72px;
   }
-}
+
 
 button, input, select, textarea, option{
   font-family: var(--font) !important;
@@ -946,6 +946,227 @@ button, input, select, textarea, option{
 .needAttention{
   animation: pulseAttention .9s ease-in-out 2;
 }
+
+
+
+
+.cartItemRow{
+  display:flex;
+  gap:14px;
+  align-items:center;
+}
+
+.cartThumb{
+  width:110px;
+  height:110px;
+  border-radius:18px;
+  background:#dff6fb;
+  border:1px solid rgba(0,0,0,.08);
+  overflow:hidden;
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cartThumb img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.cartItemText{
+  flex:1;
+  min-width:0;
+}
+
+.cartLine1{
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:.2px;
+}
+.cartLine2, .cartLine3{
+  font-size:13px;
+  color:#6b7280;
+  margin-top:6px;
+}
+
+.dot{
+  all: unset;
+  margin: 0 6px;
+}
+
+.cartRight{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.cartPrice{
+  font-weight:900;
+  font-size:18px;
+  white-space:nowrap;
+}
+
+.cartProductTitle{
+  font-weight: 900;
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.iconWA svg,
+.iconIG svg{
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+.iconWA{
+  color: #25D366;
+}
+
+.iconIG{
+  color: #E1306C;
+}
+
+.btnRemove{
+  border: 2px solid #ff6b6b;
+  background: #fff;
+  color: #d64545;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btnRemove:hover{
+  filter: brightness(0.98);
+}
+
+.cartIcon{
+  width:16px;
+  height:16px;
+  vertical-align:middle;
+  margin-right:4px;
+}
+
+.miniIcon{
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+  margin: 0 6px;
+}
+
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+@keyframes bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.addBtn{
+  position: relative; /* importante pro swap não “pular” */
+}
+
+/* só um micro “pop” quando adiciona */
+.addBtn.added{
+  animation: pop .25s ease;
+}
+.cartBadge.bump{
+  animation: bounce .45s ease;
+}
+.card.flash{
+  outline: 2px solid rgba(0, 180, 200, 0.55);
+  outline-offset: 3px;
+  border-radius: 22px;
+}
+
+/* ===== FX no card inteiro (overlay) ===== */
+.card{
+  position: relative; /* garante que o overlay fique preso no card */
+}
+
+.cardFx{
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;     /* use o mesmo radius do seu card */
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 30;             /* acima do conteúdo do card */
+}
+
+.cardFx .fx-fill{
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  left: var(--fx-x, 85%);
+  top:  var(--fx-y, 30%);
+  transform: translate(-50%, -50%) scale(0.01);
+  background: rgba(15, 166, 180, .95); /* cor do preenchimento */
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center;
+}
+
+.cardFx .fx-check{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(.95);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.cardFx .fx-check svg{
+  width: 54px;
+  height: 54px;
+  stroke: #fff;
+}
+
+/* estados */
+.cardFx.is-on{
+  opacity: 1;
+}
+
+/* mais fluido e mais lento */
+.cardFx.is-on .fx-fill{
+  animation: fxGrow 2000ms cubic-bezier(.16,1,.3,1) forwards;
+}
+
+.cardFx.is-on .fx-check{
+  animation: fxCheckIn 400ms cubic-bezier(.16,1,.3,1) 560ms forwards;
+}
+
+/* fade do CARD (visível) */
+.cardFx.is-off{
+  opacity: 1; /* essencial para o fade ser visível */
+  animation: fxFadeOut 1800ms ease-out forwards;
+}
+
+@keyframes fxGrow{
+  0%   { transform: translate(-50%, -50%) scale(0.01); }
+  100% { transform: translate(-50%, -50%) scale(85); } /* aumentei pra cobrir 100% */
+}
+
+@keyframes fxCheckIn{
+  0%   { opacity: 0; transform: scale(.85); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fxFadeOut{
+  0%   { opacity: 1; }
+  20%  { opacity: 1; }  /* segura um pouco antes de começar a sumir */
+  100% { opacity: 0; }
+}
+
   </style>
 </head>
 <body>
@@ -1066,24 +1287,23 @@ button, input, select, textarea, option{
     // 1) IMAGENS (troque aqui)
     // =========================
     const ASSETS = {
-      // Recomendo usar caminho relativo: "imgs/logo.png"
-      logoUrl: "icons/logoea.png",
+  logoUrl: "https://via.placeholder.com/220x80.png?text=LOGO",
+  placeholderLabel: "https://via.placeholder.com/800x800.png?text=ROTULO",
+  placeholderBanner: "https://via.placeholder.com/1600x520.png?text=BANNER",
 
-      // Imagem padrão para cards enquanto você não colocar as reais
-      placeholderLabel: "https://via.placeholder.com/600x600.png?text=IMAGEM+DO+R%C3%93TULO",
-
-      // Banner padrão (se faltar imagem)
-      placeholderBanner: "https://via.placeholder.com/1600x500.png?text=BANNER"
-    };
+  // ícones (pode ser link do GitHub Pages também)
+  iconWhatsapp: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+  iconInstagram: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+};
 
     // =========================
     // 2) BANNERS (carrossel)
     //    Troque imageUrl e linkUrl quando quiser
     // =========================
     const BANNERS = [
-      { imageUrl: "banners/banner1.png", linkUrl: "#" },
-      { imageUrl: "banners/banner1.png", linkUrl: "#" },
-      { imageUrl: "banners/banner1.png", linkUrl: "#" }
+      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" },
+      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" },
+      { imageUrl: ASSETS.placeholderBanner, linkUrl: "#" }
     ];
 
     // =========================
@@ -1097,11 +1317,16 @@ button, input, select, textarea, option{
     // =========================
     const PRICE_RULES = {
       global: {
-        baseUnit: 0.50, // "A partir de" (unitário base) antes de escolher
-        sizeMultipliers: { "3x3cm": 1.00, "5x5cm": 1.25, "6x6cm": 1.40, "7x7cm": 1.60 },
-        // 1000 é o "normal", quantidades menores ficam mais caras
-        qtyMultipliers: { "100": 1.35, "500": 1.12, "1000": 1.00 }
-      },
+  baseUnit: 0.50,
+  sizeMultipliers: { "3x3cm": 1.00, "5x5cm": 1.25, "6x6cm": 1.40, "7x7cm": 1.60 },
+  qtyMultipliers:  { "100": 1.35, "500": 1.12, "1000": 1.00 },
+
+  materialMultipliers: {
+    "Couchê": 1.00,
+    "Vinil Brilho": 1.35,
+    "Vinil Fosco": 1.35
+  }
+},
 
       // Exemplo: para editar por categoria, basta criar/chutar valores aqui.
       // category: { "PÁSCOA": { baseUnit: 0.55, qtyMultipliers: { "100":1.45, "500":1.18, "1000":1.00 } } }
@@ -1117,6 +1342,7 @@ button, input, select, textarea, option{
     // =========================
     const DEFAULT_SIZES = ["3x3cm","5x5cm","6x6cm","7x7cm"];
     const DEFAULT_QTYS  = ["100","500","1000"];
+    const DEFAULT_MATERIALS = ["Couchê", "Vinil Brilho", "Vinil Fosco"];
 
     // =========================
     // 6) PRODUTOS (cadastro fácil)
@@ -1131,18 +1357,19 @@ button, input, select, textarea, option{
         name:"Rótulo Páscoa Ovo",
         format:"Especiais",
         category:"PÁSCOA",
-        image: "imgs/Rótulo Teste 1.png",
+        ref: "RPSC1",
+        image: ASSETS.placeholderLabel,
 
         // opcionais (se não preencher, usa a regra global/categoria)
         // baseUnit: 0.50,
         // sizeOptions: ["3x3cm","5x5cm"],
         // qtyOptions: ["100","500","1000"]
       },
-      { id:"P002", name:"Rótulo Vela Clean", format:"Quadrados", category:"VELAS", image: "imgs/Rótulo Teste 2.png" },
-      { id:"P003", name:"Rótulo Cosmético Minimal", format:"Redondos", category:"COSMÉTICOS", image: "imgs/Rótulo Teste 3.png" },
-      { id:"P004", name:"Rótulo Bolo Festivo", format:"Quadrados", category:"BOLOS", image: "imgs/Rótulo Teste 4.png" },
-      { id:"P005", name:"Rótulo Banho Premium", format:"Redondos", category:"BANHO", image: "imgs/Rótulo Teste 5.png" },
-      { id:"P006", name:"Rótulo Casa Organiza", format:"Especiais", category:"CASA", image: "imgs/Rótulo Teste 6.png" }
+      { id:"P002", name:"Rótulo Vela Clean", format:"Quadrados", category:"VELAS", ref: "RPSC1", image: ASSETS.placeholderLabel },
+      { id:"P003", name:"Rótulo Cosmético Minimal", format:"Redondos", category:"COSMÉTICOS", ref: "RPSC1", image: ASSETS.placeholderLabel },
+      { id:"P004", name:"Rótulo Bolo Festivo", format:"Quadrados", category:"BOLOS", ref: "RPSC1", image: ASSETS.placeholderLabel },
+      { id:"P005", name:"Rótulo Banho Premium", format:"Redondos", category:"BANHO", ref: "RPSC1", image: ASSETS.placeholderLabel },
+      { id:"P006", name:"Rótulo Casa Organiza", format:"Especiais", category:"CASA", ref: "RPSC1", image: ASSETS.placeholderLabel }
     ];
 
     // =========================
@@ -1251,25 +1478,28 @@ function normalizeInstagramId(value){
       const c = (PRICE_RULES.category && PRICE_RULES.category[product.category]) || {};
       const p = (PRICE_RULES.product && PRICE_RULES.product[product.id]) || {};
       const out = {
-        baseUnit: (product.baseUnit ?? p.baseUnit ?? c.baseUnit ?? g.baseUnit) ?? 0.50,
-        sizeMultipliers: { ...(g.sizeMultipliers||{}), ...(c.sizeMultipliers||{}), ...(p.sizeMultipliers||{}) },
-        qtyMultipliers:  { ...(g.qtyMultipliers||{}),  ...(c.qtyMultipliers||{}),  ...(p.qtyMultipliers||{}) }
-      };
+  baseUnit: (product.baseUnit ?? p.baseUnit ?? c.baseUnit ?? g.baseUnit) ?? 0.50,
+  sizeMultipliers: { ...(g.sizeMultipliers||{}), ...(c.sizeMultipliers||{}), ...(p.sizeMultipliers||{}) },
+  qtyMultipliers:  { ...(g.qtyMultipliers||{}),  ...(c.qtyMultipliers||{}),  ...(p.qtyMultipliers||{}) },
+  materialMultipliers: { ...(g.materialMultipliers||{}), ...(c.materialMultipliers||{}), ...(p.materialMultipliers||{}) }
+};
       return out;
     }
 
-    function getUnitPrice(product, sizeValue, qtyValue){
-      const rule = getMergedRule(product);
-      const sizeMul = rule.sizeMultipliers?.[sizeValue] ?? 1.0;
-      const qtyMul  = rule.qtyMultipliers?.[qtyValue] ?? 1.0;
-      return rule.baseUnit * sizeMul * qtyMul;
-    }
+    function getUnitPrice(product, sizeValue, qtyValue, materialValue){
+  const rule = getMergedRule(product);
+  const sizeMul = rule.sizeMultipliers?.[sizeValue] ?? 1.0;
+  const qtyMul  = rule.qtyMultipliers?.[qtyValue] ?? 1.0;
+  const matMul  = rule.materialMultipliers?.[materialValue] ?? 1.0;
 
-    function getTotalPrice(product, sizeValue, qtyValue){
-      const unit = getUnitPrice(product, sizeValue, qtyValue);
-      const q = parseInt(qtyValue, 10) || 0;
-      return unit * q;
-    }
+  return rule.baseUnit * sizeMul * qtyMul * matMul;
+}
+
+    function getTotalPrice(product, sizeValue, qtyValue, materialValue){
+  const unit = getUnitPrice(product, sizeValue, qtyValue, materialValue);
+  const q = parseInt(qtyValue, 10) || 0;
+  return unit * q;
+}
 
     // =========================
     // 9) Filtros dinâmicos (só o que existe)
@@ -1322,6 +1552,36 @@ function normalizeInstagramId(value){
       }
       return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 15h10a4 4 0 0 0 0-8 5 5 0 0 0-9.6 1.6A3.5 3.5 0 0 0 7 15z"/></svg>`;
     }
+
+function playCardAddFx(card, originEl){
+  const fx = card.querySelector(".cardFx");
+  if(!fx) return;
+
+  // define o ponto de origem (canto do botão)
+  const cardRect = card.getBoundingClientRect();
+  const oRect = (originEl || card).getBoundingClientRect();
+
+  const x = ((oRect.left + oRect.width*0.75) - cardRect.left) / cardRect.width * 100;
+  const y = ((oRect.top + oRect.height*0.35) - cardRect.top) / cardRect.height * 100;
+
+  fx.style.setProperty("--fx-x", Math.max(0, Math.min(100, x)) + "%");
+  fx.style.setProperty("--fx-y", Math.max(0, Math.min(100, y)) + "%");
+
+  fx.classList.remove("is-off");
+  fx.classList.add("is-on");
+
+  // fase de saída
+setTimeout(() => {
+  fx.classList.remove("is-on");
+  fx.classList.add("is-off");
+}, 1400);
+
+setTimeout(() => {
+  fx.classList.remove("is-off");
+  fx.style.removeProperty("--fx-x");
+  fx.style.removeProperty("--fx-y");
+}, 1400 + 1800 + 300); // ~3500
+}
 
     // =========================
     // 11) Render: Formatos
@@ -1484,37 +1744,41 @@ function canAutoSelectYes(){
 
   <div class="cardBody">
     <div class="protoRow">
-      <div>
-        <div class="controls">
-          <select class="select js-size" aria-label="Tamanho">
-            <option value="">Tamanho</option>
-            ${sizeOptions.map(s => `<option value="${s}">${s}</option>`).join("")}
-          </select>
+  <div class="controls">
+    <select class="select js-size" aria-label="Tamanho">
+      <option value="">Tamanho</option>
+      ${sizeOptions.map(s => `<option value="${s}">${s}</option>`).join("")}
+    </select>
 
-          <select class="select js-qty" aria-label="Quantidade">
-            <option value="">Quantidade</option>
-            ${qtyOptions.map(q => `<option value="${q}">${q} unid.</option>`).join("")}
-          </select>
-        </div>
-      </div>
+    <select class="select js-qty" aria-label="Quantidade">
+      <option value="">Quantidade</option>
+      ${qtyOptions.map(q => `<option value="${q}">${q} unid.</option>`).join("")}
+    </select>
 
-      <div class="protoRight">
-        <div class="budgetBox">
-          <div class="budgetLabel js-budget-label">A partir de:</div>
-          <div class="budgetValue js-budget-value">${fromText}</div>
-          <div class="budgetHint js-budget-hint"></div>
-        </div>
+    <select class="select js-material" aria-label="Material">
+      <option value="">Material</option>
+      ${ (p.materialOptions?.length ? p.materialOptions : DEFAULT_MATERIALS)
+          .map(m => `<option value="${m}">${m}</option>`).join("") }
+    </select>
+  </div>
 
-        <button class="addBtn js-add" aria-label="Adicionar ao carrinho" title="Adicionar ao carrinho">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 6h15l-2 9H8L6 6Z"></path>
-            <path d="M6 6L5 3H2"></path>
-            <circle cx="9" cy="20" r="1"></circle>
-            <circle cx="18" cy="20" r="1"></circle>
-          </svg>
-        </button>
-      </div>
+  <div class="protoRight">
+    <div class="budgetBox">
+      <div class="budgetLabel js-budget-label">A partir de:</div>
+      <div class="budgetValue js-budget-value">${fromText}</div>
+      <div class="budgetHint js-budget-hint"></div>
     </div>
+
+    <button class="addBtn js-add" aria-label="Adicionar ao carrinho" title="Adicionar ao carrinho">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 6h15l-2 9H8L6 6Z"></path>
+        <path d="M6 6L5 3H2"></path>
+        <circle cx="9" cy="20" r="1"></circle>
+        <circle cx="18" cy="20" r="1"></circle>
+      </svg>
+    </button>
+  </div>
+</div>
 
     <div class="personalCard">
       <p class="pTitle">Deseja personalizar com seu:</p>
@@ -1547,18 +1811,30 @@ function canAutoSelectYes(){
       </div>
     </div>
   </div>
+
+  <div class="cardFx" aria-hidden="true">
+  <span class="fx-fill"></span>
+  <span class="fx-check">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6L9 17l-5-5"></path>
+    </svg>
+  </span>
+</div>
 `;
 
         const sizeSel = card.querySelector(".js-size");
         const qtySel  = card.querySelector(".js-qty");
+        const matSel  = card.querySelector(".js-material");
+        
         const budgetLabel = card.querySelector(".js-budget-label");
         const budgetValue = card.querySelector(".js-budget-value");
         const budgetHint  = card.querySelector(".js-budget-hint");
-        const addBtn = card.querySelector(".js-add");
+        const addBtn      = card.querySelector(".js-add");
 
         function updateBudget(){
           const s = sizeSel.value;
           const q = qtySel.value;
+          const m = matSel.value;
 
           const persSelected = card.querySelector(`input[name="pers_${p.id}"]:checked`)?.value || "";
 
@@ -1566,14 +1842,14 @@ function canAutoSelectYes(){
           if(s && q && persSelected){ addBtn.classList.add("pulse"); }
           else{ addBtn.classList.remove("pulse"); }
 
-          if(!s || !q){
+          if(!s || !q || !m){
             budgetLabel.textContent = "A partir de:";
             setBudgetValue(budgetValue, getMergedRule(p).baseUnit);
             budgetHint.textContent = "";
             return;
           }
 
-          const total = getTotalPrice(p, s, q);
+          const total = getTotalPrice(p, s, q, m);
           budgetLabel.textContent = "Orçamento:";
           setBudgetValue(budgetValue, total);
           budgetHint.textContent = ""; // reservado se você quiser mostrar unitário depois
@@ -1608,6 +1884,14 @@ qtySel.onchange = () => {
   }
   updateBudget(); // <-- recalcula e atualiza botão pulse
 };
+
+matSel.onchange = () => {
+  if(matSel.value){
+    card.dataset.started = "1";
+    autoSelectYesIfAllowed();
+  }
+  updateBudget();
+};
         card.querySelectorAll(`input[name="pers_${p.id}"]`).forEach(r => {
   r.addEventListener("change", (ev) => {
     if(ev.target.value === "Sim"){
@@ -1622,37 +1906,66 @@ qtySel.onchange = () => {
   });
 });
 
-        addBtn.onclick = () => {
-          const s = sizeSel.value;
-          const q = qtySel.value;
+addBtn.onclick = () => {
+  const s = sizeSel.value;
+  const q = qtySel.value;
+  const m = matSel.value;
 
-          if(!s || !q){
-            alert("Selecione o tamanho e a quantidade para adicionar ao carrinho.");
-            return;
-          }
+  if(!s || !q || !m){
+    alert("Selecione tamanho, quantidade e material.");
+    return;
+  }
 
-          const pers = card.querySelector(`input[name="pers_${p.id}"]:checked`)?.value || "";
-          const unit = getUnitPrice(p, s, q);
-          const total = getTotalPrice(p, s, q);
+  const pers = card.querySelector(`input[name="pers_${p.id}"]:checked`)?.value || "";
+  const unit = getUnitPrice(p, s, q, m);
+  const total = getTotalPrice(p, s, q, m);
 
-          const cartKey = `${p.id}__${s}__${q}__${pers || "NA"}`;
+  const cartKey = `${p.id}__${s}__${q}__${m}__${pers || "NA"}`;
 
-          state.cart[cartKey] = {
-            key: cartKey,
-            productId: p.id,
-            name: p.name,
-            format: p.format,
-            category: p.category,
-            size: s,
-            qty: parseInt(q, 10),
-            personalize: pers, // "Sim" | "Não" | ""
-            unitPrice: unit,
-            totalPrice: total
-          };
+  state.cart[cartKey] = {
+    key: cartKey,
+    productId: p.id,
+    name: p.name,
+    format: p.format,
+    category: p.category,
+    size: s,
+    qty: parseInt(q, 10),
+    material: m,
+    personalize: pers, // "Sim" | "Não" | ""
+    unitPrice: unit,
+    totalPrice: total,
+    image: p.image || ASSETS.placeholderLabel,
+    ref: p.ref || "",
+  };
 
-          setCartCount();
-          renderCart();
-        };
+  setCartCount();
+  renderCart();
+
+  // bump no contador do carrinho
+  const badge = document.querySelector("#cartCount");
+  if(badge){
+    badge.classList.remove("bump");
+    void badge.offsetWidth;
+    badge.classList.add("bump");
+  }
+
+  // FX no card inteiro (overlay)
+  playCardAddFx(card, addBtn);
+
+  // reset do produto após o FX (um único reset, sem duplicar)
+  setTimeout(() => {
+    sizeSel.value = "";
+    qtySel.value = "";
+    matSel.value = "";
+
+    card.querySelectorAll(`input[name="pers_${p.id}"]`).forEach(r => r.checked = false);
+    card.dataset.started = "0";
+
+    updateBudget();
+    addBtn.classList.remove("pulse");
+  }, 1650);
+};
+        
 
         // Atualiza textos de personalização (topo) dentro do card
         card.querySelector(".js-pw").textContent = state.pWhatsapp ? state.pWhatsapp : "---";
@@ -1662,46 +1975,90 @@ qtySel.onchange = () => {
       });
     }
 
-    // =========================
-    // 15) Carrinho + WhatsApp
-    // =========================
-    function renderCart(){
-      const body = el("cartBody");
-      const items = Object.values(state.cart);
-      body.innerHTML = "";
+// =========================
+// 15) Carrinho + WhatsApp
+// =========================
+function renderCart(){
 
-      if(items.length === 0){
-        const div = document.createElement("div");
-        div.className = "empty";
-        div.textContent = "Seu carrinho está vazio.";
-        body.appendChild(div);
-        return;
-      }
+  const body = el("cartBody");
+  const items = Object.values(state.cart);
 
-      items.sort((a,b)=>a.name.localeCompare(b.name,"pt-BR"));
+  if(items.length === 0){
+    body.innerHTML = `<div class="empty">Seu carrinho está vazio.</div>`;
+    return;
+  }
 
-      items.forEach(i => {
-        const row = document.createElement("div");
-        row.className = "row";
-        row.innerHTML = `
-          <div>
-            <strong>${i.name}</strong><br>
-            <small>${i.category} • ${i.format} • ${i.size} • ${i.qty} unid.</small><br>
-            <small>Personalização: ${i.personalize ? i.personalize : "Não selecionado"}</small>
+  body.innerHTML = items.map(i => {
+
+    const personalize = i.personalize || "Não";
+
+    return `
+    <div class="cartItem">
+      <div class="cartItemRow">
+        
+        <div class="cartThumb">
+          <img src="${i.image || ASSETS.placeholderLabel}" alt="${i.name}">
+        </div>
+
+        <div class="cartItemText">
+
+          <div class="cartProductTitle">
+            ${i.name}
           </div>
-          <div class="lineTotal">${moneyBR(i.totalPrice)}</div>
-          <button class="danger">Remover</button>
-        `;
 
-        row.querySelector(".danger").onclick = () => {
-          delete state.cart[i.key];
-          setCartCount();
-          renderCart();
-        };
+          <div class="cartLine1">
+            ${String(i.size).toUpperCase()} • ${i.qty} UNID • ${i.material}
+          </div>
 
-        body.appendChild(row);
-      });
-    }
+          ${
+            personalize === "Sim"
+            ? `
+              <div class="cartLine2">
+                Personalização: (Sim)
+                <span class="dot">•</span>
+                <img class="miniIcon" src="${ASSETS.iconWhatsapp}" alt="WhatsApp">
+                ${state.pWhatsapp || "(00) 00000-0000"}
+                <span class="dot">•</span>
+                <img class="miniIcon" src="${ASSETS.iconInstagram}" alt="Instagram">
+                ${state.pInstagram || "etiquetas.adesivos01"}
+              </div>
+            `
+            : `
+              <div class="cartLine2">
+                Personalização: (Não)
+              </div>
+            `
+          }
+
+          <div class="cartLine3">
+            Categoria: ${i.category} | Formato: ${i.format}${i.ref ? ` | ${i.ref}` : ""}
+          </div>
+
+        </div>
+
+        <div class="cartRight">
+          <div class="cartPrice">${moneyBR(i.totalPrice)}</div>
+          <button class="btnRemove" data-key="${i.key}">Remover</button>
+        </div>
+
+      </div>
+    </div>
+    `;
+
+  }).join("");
+
+  // Remover item
+  body.querySelectorAll(".btnRemove").forEach(btn => {
+    btn.onclick = () => {
+      delete state.cart[btn.dataset.key];
+      setCartCount();
+      renderCart();
+    };
+  });
+
+}
+
+
 
     function buildWhatsAppMessage(){
       const items = Object.values(state.cart);
